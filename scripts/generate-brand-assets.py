@@ -8,6 +8,7 @@ Outputs:
   app/apple-icon.png         (180)
   app/opengraph-image.png    (1200x630, logo on dark panel bg)
   app/twitter-image.png      (1200x600, logo on dark panel bg)
+  docs/designs/github-social-preview.png  (1280x640, GitHub repo social preview)
   public/brand/logo-64.png   (sidebar @ 1x/2x)
   public/brand/logo-128.png  (sidebar / inline @ 3x, generic UI)
   public/brand/logo-256.png  (anywhere larger)
@@ -87,6 +88,7 @@ def main() -> None:
     # Social cards (dark bg)
     write_png(make_social(square, 1200, 630), ROOT / "app" / "opengraph-image.png")
     write_png(make_social(square, 1200, 600), ROOT / "app" / "twitter-image.png")
+    write_png(make_social(square, 1280, 640), ROOT / "docs" / "designs" / "github-social-preview.png")
 
     # In-app brand assets
     for size in (64, 128, 256):
