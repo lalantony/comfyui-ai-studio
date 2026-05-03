@@ -1,0 +1,174 @@
+{
+  "60": {
+    "inputs": {
+      "filename_prefix": "z-image-turbo",
+      "images": [
+        "83:8",
+        0
+      ]
+    },
+    "class_type": "SaveImage",
+    "_meta": {
+      "title": "Save Image"
+    }
+  },
+  "85": {
+    "inputs": {
+      "text": "Hand-drawn storyboard sketch, black and white wireframe style, six storyboard panels arranged in two rows of three, rough pencil and ink linework, loose sketch strokes, minimal shading, white background, no color.\n\nStoryboard style text labels under each panel in rough handwritten font, simple arrows or numbers marking scene order, cinematic framing but intentionally rough and unfinished, concept art storyboard aesthetic, product explainer wireframe, 16:9 canvas containing six frames, high resolution sketch, no color, no realism, no photorealism, no detailed textures."
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "storyline base prompt"
+    }
+  },
+  "86": {
+    "inputs": {
+      "text": "Character Sheet\n\nThe Mechanic (Hero)\nA mid-40s small business mechanic, slightly rugged, wearing a work shirt with grease marks. Practical and hardworking, focused on fixing cars, not admin work.\n\nKeep the Mechanic visually consistent in all panels.\n\nPanels\n\nPanel 1\nThe Mechanic sits in a small office corner looking at a computer showing a list of customers due for service.\nCaption:\n“These customers are due for service…”\n\nPanel 2\nHe’s back in the workshop working on a car, tools in hand, no time for calls.\nCaption:\n“…but I don’t have time to call them.”\n\nPanel 3\nShot of a booking calendar or whiteboard with multiple empty service slots.\nCaption:\n“So jobs go unbooked.”\n\nPanel 4\nThe Mechanic walks past the office desk, ignoring the customer list as work continues.\nCaption:\n“And follow-ups never happen.”\n\nPanel 5\nSimple interface showing automated calls going out to customers due for service.\nCaption:\n“Frontly calls customers and books them in.”\n\nPanel 6\nWorkshop now active with multiple cars, the Mechanic working steadily, confident and busy.\nCaption:\n“Turn your customer list into steady work.”"
+    },
+    "class_type": "Text Multiline",
+    "_meta": {
+      "title": "prompt"
+    }
+  },
+  "87": {
+    "inputs": {
+      "text1": [
+        "86",
+        0
+      ],
+      "text2": [
+        "85",
+        0
+      ]
+    },
+    "class_type": "TextCombinerTwo",
+    "_meta": {
+      "title": "Text Combiner 2"
+    }
+  },
+  "83:30": {
+    "inputs": {
+      "clip_name": "qwen_3_4b.safetensors",
+      "type": "lumina2",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load CLIP"
+    }
+  },
+  "83:29": {
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE"
+    }
+  },
+  "83:13": {
+    "inputs": {
+      "width": 1024,
+      "height": 1024,
+      "batch_size": 1
+    },
+    "class_type": "EmptySD3LatentImage",
+    "_meta": {
+      "title": "EmptySD3LatentImage"
+    }
+  },
+  "83:33": {
+    "inputs": {
+      "conditioning": [
+        "83:27",
+        0
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "ConditioningZeroOut"
+    }
+  },
+  "83:8": {
+    "inputs": {
+      "samples": [
+        "83:3",
+        0
+      ],
+      "vae": [
+        "83:29",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "VAE Decode"
+    }
+  },
+  "83:3": {
+    "inputs": {
+      "seed": 858813136350574,
+      "steps": 4,
+      "cfg": 1,
+      "sampler_name": "res_multistep",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "83:11",
+        0
+      ],
+      "positive": [
+        "83:27",
+        0
+      ],
+      "negative": [
+        "83:33",
+        0
+      ],
+      "latent_image": [
+        "83:13",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "83:28": {
+    "inputs": {
+      "unet_name": "z_image_turbo_bf16.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model"
+    }
+  },
+  "83:11": {
+    "inputs": {
+      "shift": 3,
+      "model": [
+        "83:28",
+        0
+      ]
+    },
+    "class_type": "ModelSamplingAuraFlow",
+    "_meta": {
+      "title": "ModelSamplingAuraFlow"
+    }
+  },
+  "83:27": {
+    "inputs": {
+      "text": "A premium modern business end screen background for an AI phone automation brand, designed as the final closing frame of a high-end video ad. The composition is clean, minimal, and visually striking, with a sophisticated corporate feel. The scene features a soft layered abstract environment made of smooth curved panels and subtle flowing shapes, creating depth and structure without clutter. The overall design feels like calm, control, and efficiency after chaos.\n\nUse a refined color palette of soft whites, warm light greys, muted stone tones, and very subtle desaturated blue-grey accents. Lighting is soft and even, with a gentle premium studio glow, no harsh highlights, no dramatic shadows, no neon. The background has elegant dimensionality with subtle gradients, faint reflections, and smooth surfaces that feel polished and modern.\n\nIn the middle area, leave a clean open focal zone with strong negative space where a logo can be placed later. Around that central area, the abstract shapes should frame the space naturally without competing for attention. Add a very subtle sense of forward motion and intelligent system flow through layered lines, soft curved pathways, or understated directional forms, suggesting automation and streamlined workflow, but keep it abstract and tasteful.\n\nThe image should feel like the closing frame of a premium SaaS or enterprise technology commercial, polished, trustworthy, calm, high-end, and globally modern. No people, no devices, no phones, no icons, no charts, no text, no UI screens, no holograms, no obvious futuristic sci-fi elements. The image should be elegant enough to support a logo and short tagline overlay after generation.\n\n16:9 widescreen composition, highly balanced layout, central clean space, premium ad quality, polished abstract business environment, modern minimalism, subtle depth, refined visual hierarchy.",
+      "clip": [
+        "83:30",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  }
+}

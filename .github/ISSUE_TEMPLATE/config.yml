@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question / discussion
+    url: https://github.com/lalantony/comfyui-ai-studio/discussions
+    about: Use Discussions for open-ended questions, workflow recipes, and design conversations.
+  - name: ComfyUI bug
+    url: https://github.com/comfyanonymous/ComfyUI/issues
+    about: If the bug is in ComfyUI itself (not the studio's integration), please report it upstream.
+  - name: Security report
+    url: https://github.com/lalantony/comfyui-ai-studio/security/advisories/new
+    about: Use private security advisories for vulnerability reports — see SECURITY.md.

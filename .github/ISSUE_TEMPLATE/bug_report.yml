@@ -1,0 +1,115 @@
+name: Bug report
+description: Something is broken or behaving incorrectly
+title: "[Bug] "
+labels: ["bug", "needs-triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug report. The more detail you give us, the faster we can fix it.
+
+        Before submitting, please search [existing issues](../issues) to make sure this hasn't been reported.
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: One or two sentences describing what's broken.
+      placeholder: When I click Generate in the project composer, nothing happens.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Minimal steps that reliably trigger the bug. Include screenshots or a short clip if helpful.
+      placeholder: |
+        1. Open project X
+        2. Type "@" in the composer
+        3. Select asset Y from the dropdown
+        4. Click Generate
+        5. Observe: the run never starts; no SSE events; no errors in the console
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      placeholder: Generate should start the workflow run and show progress on each node.
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      placeholder: The button briefly shows a spinner then resets. No run is created on disk.
+    validations:
+      required: true
+
+  - type: input
+    id: app-version
+    attributes:
+      label: App version / commit
+      description: Output of `git rev-parse --short HEAD`, or the release tag.
+      placeholder: ab12cd3
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version
+      placeholder: v22.17.1
+    validations:
+      required: true
+
+  - type: dropdown
+    id: os
+    attributes:
+      label: Operating system
+      options:
+        - Windows
+        - macOS
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: comfy-version
+    attributes:
+      label: ComfyUI version
+      description: Only required if the bug involves a workflow run.
+      placeholder: e.g. 0.3.10 (commit hash also fine)
+
+  - type: dropdown
+    id: comfy-mode
+    attributes:
+      label: ComfyUI environment type
+      options:
+        - Local (127.0.0.1)
+        - Remote (self-hosted)
+        - Comfy Org API
+        - Not applicable
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Relevant output from the dev server console and/or browser DevTools console.
+      render: shell
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Pre-flight
+      options:
+        - label: I have searched existing issues for duplicates.
+          required: true
+        - label: I have read the [Code of Conduct](../blob/main/CODE_OF_CONDUCT.md).
+          required: true

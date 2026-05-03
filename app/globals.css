@@ -1,0 +1,256 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-background: hsl(222 18% 6%);
+  --color-foreground: hsl(220 20% 96%);
+
+  --color-panel: hsl(222 16% 9%);
+  --color-panel-soft: hsl(222 14% 12%);
+  --color-panel-elevated: hsl(222 14% 15%);
+
+  --color-border: hsl(222 12% 20%);
+  --color-border-soft: hsl(222 10% 16%);
+
+  --color-muted: hsl(220 10% 60%);
+  --color-muted-foreground: hsl(220 8% 70%);
+
+  --color-primary: hsl(255 88% 66%);
+  --color-primary-foreground: hsl(0 0% 100%);
+
+  --color-accent-blue: hsl(205 90% 62%);
+  --color-accent-green: hsl(145 65% 55%);
+  --color-accent-orange: hsl(28 95% 62%);
+  --color-accent-pink: hsl(330 80% 68%);
+  --color-accent-yellow: hsl(68 100% 62%);
+
+  --color-danger: hsl(0 72% 58%);
+  --color-success: hsl(145 65% 48%);
+  --color-warning: hsl(38 92% 56%);
+
+  --color-brand-pink: #ff4d8d;
+  --color-brand-orange: #ff7a45;
+  --color-brand-yellow: #ffc83d;
+
+  --color-card: hsl(222 16% 9%);
+  --color-card-foreground: hsl(220 20% 96%);
+  --color-popover: hsl(222 14% 12%);
+  --color-popover-foreground: hsl(220 20% 96%);
+  --color-secondary: hsl(222 14% 15%);
+  --color-secondary-foreground: hsl(220 20% 96%);
+  --color-destructive: hsl(0 72% 58%);
+  --color-destructive-foreground: hsl(0 0% 100%);
+  --color-ring: hsl(255 88% 66%);
+
+  --radius-sm: calc(0.75rem - 4px);
+  --radius-md: calc(0.75rem - 2px);
+  --radius-lg: 0.75rem;
+
+  --font-sans: "Inter", "Geist Sans", system-ui, sans-serif;
+
+  --animate-glow: glow 2s ease-in-out infinite;
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(124, 92, 255, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(124, 92, 255, 0.6);
+  }
+}
+
+@keyframes node-progress-slide {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(300%); }
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Global scrollbar styling — applied once here so every overflowing surface
+     in the app (panels, textareas, nav, tables, dialogs, etc.) gets the same
+     dark-theme treatment without per-callsite classes.
+
+     - Standard properties (scrollbar-width, scrollbar-color) cover Firefox,
+       Safari 18+, and Chrome 121+. scrollbar-color inherits, but
+       scrollbar-width doesn't, so we set the latter on `*`.
+     - WebKit pseudo-elements cover older Chromium/Safari and let us style
+       width, hover, and the inset-padding effect via a transparent border. */
+  * {
+    scrollbar-width: thin;
+  }
+  html {
+    scrollbar-color: var(--color-border) transparent;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--color-muted) 60%, transparent);
+    background-clip: content-box;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+}
+
+@utility brand-gradient {
+  background: linear-gradient(135deg, #ff4d8d 0%, #ff7a45 45%, #ffc83d 100%);
+}
+
+@utility brand-gradient-hover {
+  background: linear-gradient(135deg, #ff5d9d 0%, #ff8a55 45%, #ffd35d 100%);
+}
+
+@utility glass-panel {
+  @apply bg-panel/80 backdrop-blur-xl border border-white/8;
+}
+
+@utility glass-panel-elevated {
+  @apply bg-panel-elevated/90 backdrop-blur-xl border border-white/10;
+}
+
+@utility text-gradient {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent-orange;
+}
+
+/* Slimmer variant for compact contexts (popovers, sidebar nav, dropdowns).
+   The base layer already gives every scrollbar a 10px treatment — apply this
+   class only when you specifically want the 6px look. */
+@utility scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 999px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: color-mix(in srgb, var(--color-muted) 60%, transparent);
+  }
+}
+
+/* React Flow Custom Styles */
+.react-flow {
+  --xy-edge-stroke-default: var(--color-border);
+  --xy-edge-stroke-selected-default: var(--color-primary);
+  --xy-handle-background-color-default: var(--color-panel-elevated);
+  --xy-handle-border-color-default: var(--color-border);
+  --xy-node-border-default: none;
+  --xy-node-boxshadow-default: none;
+}
+
+.react-flow__background {
+  background-color: var(--color-background);
+}
+
+.react-flow__minimap {
+  background-color: var(--color-panel);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.react-flow__controls {
+  background-color: var(--color-panel) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-lg) !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+.react-flow__controls-button {
+  width: 28px !important;
+  height: 28px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 4px !important;
+  background-color: transparent !important;
+  border: none !important;
+  border-bottom: 1px solid var(--color-border) !important;
+  color: var(--color-muted-foreground) !important;
+  cursor: pointer;
+}
+
+.react-flow__controls-button:last-of-type {
+  border-bottom: none !important;
+}
+
+.react-flow__controls-button svg {
+  width: 16px !important;
+  height: 16px !important;
+  fill: currentColor !important;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.react-flow__controls-button:hover {
+  background-color: var(--color-panel-soft) !important;
+  color: var(--color-foreground) !important;
+}
+
+.react-flow__node {
+  border-radius: var(--radius-lg);
+}
+
+.react-flow__node.selected {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-primary) 50%, transparent),
+    0 0 20px color-mix(in srgb, var(--color-primary) 20%, transparent);
+}
+
+.react-flow__edge path {
+  stroke-width: 2;
+}
+
+.react-flow__handle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid;
+}
+
+.react-flow__handle-top {
+  top: -5px;
+}
+
+.react-flow__handle-bottom {
+  bottom: -5px;
+}
+
+.react-flow__handle-left {
+  left: -5px;
+}
+
+.react-flow__handle-right {
+  right: -5px;
+}

@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Production
+.next/
+out/
+dist/
+build/
+
+# Local studio data (user-generated projects, assets, workflow runs)
+.studio-data/
+
+# Private working docs — kept locally for reference but not synced to a public repo.
+# New public-facing docs live in docs/ alongside this ignore (ARCHITECTURE.md, etc.).
+docs/archive/
+
+# Environment
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Playwright MCP local cache (screenshots, snapshots, console logs)
+.playwright-mcp/
+
+# Test coverage reports
+coverage/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
